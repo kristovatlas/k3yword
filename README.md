@@ -1,5 +1,5 @@
-# random-homogylph-generator
-Bypass keyword based censorship
+# k3yword
+Converts text to Unicode variants that are easily read by humans but difficult for censorship algorithms to spot.
 
 How to use:
 1. In the GitHub interface, click Code -> Download ZIP.
