@@ -34,15 +34,18 @@ function randomElt(array) {
 function convert(str) {
   var new_str = '';
   var replacements = 0;
+  var variations = 1;
   for (let char of str) {
     if (homoglyphs[char]) {
+      var numHomoglyphs = homoglyphs[char].length;
+      variations = variations * numHomoglyphs;
       new_str = new_str + randomElt(homoglyphs[char]);
       replacements = replacements + 1;
     } else {
       new_str = new_str + char;
     }
   }
-  return [new_str, replacements, hash(new_str)];
+  return [new_str, replacements, hash(new_str), variations];
 }
 
 function hash (str) {
@@ -56,6 +59,7 @@ function ui_convert() {
   document.getElementById('output').innerHTML = converted[0];
   document.getElementById('replacements').innerHTML = converted[1];
   document.getElementById('hash').innerHTML = converted[2];
+  document.getElementById('variations').innerHTML = converted[3];
 }
 
 console.log(convert('test'));
