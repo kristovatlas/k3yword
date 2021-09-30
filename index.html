@@ -5,12 +5,33 @@
   <body>
     <div>
       <form>
-        <input type="text" id="input">
-        <input type="button" value="Convert" onClick="ui_convert()">
+        <div>Your text:</div>
+        <textarea id="input" autofocus rows="15" cols="100" oninput="ui_convert()"></textarea>
+        <br/>
+        <br/>
+        <span>Convert:</span>
+        <div>
+            <input type="radio" name="convert-which" id="all" value="all" checked onclick="ui_convert()">
+            <label for="all">All words</label>
+        </div>
+        <!--div>
+          <input type="radio" name="convert-which" id="keywords" value="keywords" onclick="ui_convert()">
+          <label for="keywords">Keywords only</label>
+        </div-->
+        <span>Readability:</span>
+        <div>
+            <input type="radio" name="readability" value="high" checked onclick="ui_convert()">
+            <label for="high">High</label>
+        </div>
+        <div>
+          <input type="radio" name="readability" value="low" onclick="ui_convert()">
+          <label for="low">Low</label>
+        </div>
       </form>
     </div>
     <div>
-      Output: <span id="output"></span>
+      Output:<br/>
+      <textarea id="output" rows="15" cols="100" style="font-family:system-ui"></textarea>
     </div>
     <div>
       # Replacements: <span id="replacements"></span>

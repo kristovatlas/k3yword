@@ -1,6 +1,32 @@
 //https://gist.github.com/StevenACoffman/a5f6f682d94e38ed804182dc2693ed4b
 //https://github.com/codebox/homoglyph/blob/master/raw_data/chars.txt
-var homoglyphs = {
+var homoglyphs_readable = {
+  a: ['а'],
+  c: ['с'],
+  d: ['ԁ'],
+  h: ['һ'],
+  i: ['і'],
+  j: ['ј'],
+  n: ['ո'],
+  o: ['о','ο','օ'],
+  p: ['р'],
+  t: ['𝐭'],
+  u: ['ս'],
+  v: ['ν','ѵ'],
+  x: ['х','ҳ'],
+  y: ['у'],
+  A: ['Α'],
+  B: ['Β'],
+  E: ['Ε'],
+  H: ['Η'],
+  I: ['Ι'],
+  O: ['Ο'],
+  P: ['Ρ'],
+  N: ['Ν'],
+  X: ['Χ'],
+  Z: ['Ζ']
+}
+var homoglyphs_extended = {
   a: ['а','ạ','ą','ä','à','á','ą'],
   c: ['с','ƈ','ċ'],
   d: ['ԁ','ɗ'],
@@ -31,15 +57,19 @@ function randomElt(array) {
   return array[index]
 }
 
-function convert(str) {
+function convert(str, readability, all) {
   var new_str = '';
   var replacements = 0;
   var variations = 1;
+  var lookup = homoglyphs_readable;
+  if (readability == 'low') {
+    lookup = homoglyphs_extended;
+  }
   for (let char of str) {
-    if (homoglyphs[char]) {
-      var numHomoglyphs = homoglyphs[char].length;
+    if (lookup[char]) {
+      var numHomoglyphs = lookup[char].length;
       variations = variations * numHomoglyphs;
-      new_str = new_str + randomElt(homoglyphs[char]);
+      new_str = new_str + randomElt(lookup[char]);
       replacements = replacements + 1;
     } else {
       new_str = new_str + char;
@@ -54,8 +84,19 @@ function hash (str) {
 
 function ui_convert() {
   var input = document.getElementById('input').value;
-  var converted = convert(input);
-  console.log(converted);
+
+  var readability = 'high'; //default
+  if (document.getElementsByName('readability')[1].checked) {
+    readability = 'low';
+  }
+
+  var all = true;
+  /*
+  if (document.getElementsByName('convert-which')[1].checked) {
+    all = false;
+  }*/
+  var converted = convert(input, readability, all);
+  console.log(converted, readability, all);
   document.getElementById('output').innerHTML = converted[0];
   document.getElementById('replacements').innerHTML = converted[1];
   document.getElementById('hash').innerHTML = converted[2];
